@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Tugas Pertemuan 5</h2>
+    </br>
+    </br>
+    <h3>Masukan Data</h3>
+    </br>
+    <input type="text" id="text-data" placeholder="Masukan Data"/>
+    </br>
+    </br>
+    <button onclick="sub_mit()">Submit Data</button>
+    <button onclick="sty_txt()">Style Data</button>
+    <button onclick="size_txt()">Size Data</button>
+    <button onclick="clr_text()">Change Color Text</button>
+    </br>
+    <h5>Output Data : </h5>
+    <p id="txt-output"></p>
+
+    <script>
+        function sub_mit(){
+            let dt_in = document.getElementById("text-data").value;
+            if(dt_in == ""){
+                alert("Output Data Kosong");
+            }
+            else{
+                document.getElementById("txt-output").innerHTML = dt_in;
+                document.getElementById("txt-output").style.fontFamily = "";
+                document.getElementById("txt-output").style.fontSize = "";
+                document.getElementById("txt-output").style.color = "black";
+            }
+        } 
+        
+        function sty_txt(){
+            let isi = document.getElementById("txt-output").innerHTML;
+            if(isi == ""){
+                alert("Output Data Kosong");
+            }
+            else{
+                document.getElementById("txt-output").style.fontFamily = "Arial, Helvetica, sans-serif";
+            }
+            
+        }
+
+        function size_txt(){
+            let ukur = document.getElementById("txt-output").innerHTML;
+            if(ukur == ""){
+                alert("Output Data Kosong");
+            }
+            else{
+                document.getElementById("txt-output").style.fontSize = "50px";
+            }
+        }
+
+        function clr_text(){
+            let color = document.getElementById("txt-output").innerHTML;
+            if(color == ""){
+                alert("Output Data Kosong");
+            }
+            else{
+                document.getElementById("txt-output").style.color = "purple";
+            }
+        }
+
+    </script>
+
+</body>
+</html>
