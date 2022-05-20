@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,
+        th,
+        tr{
+            border: 1px solid black;
+        }
+        td {
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-form">
+        <button id="btn-back">Kembali</button>
+        <br />
+        <br />
+        <form id="form">
+            <fieldset>
+                <legend>Input Data Siswa</legend>
+                <label>Nama :</label>
+                <input type="text" id="nama" placeholder="nama" />
+                <br />
+                <br />
+                <label>Kelas :</label>
+                <input type="text" id="kelas" placeholder="kelas" />
+                <br />
+                <br />
+                <label>Alamat :</label>
+                <input type="text" id="alamat" placeholder="alamat" />
+                <br />
+                <br />
+                <button type="submit">Tambah</button>
+            </fieldset>
+            
+        </form>
+        
+    </div>
+
+    <div id="page-form-edit">
+        <button id="btn-back-edit">Kembali</button>
+        <br />
+        <br />
+        <form id="form-edit">
+            <fieldset>
+                <legend>Edit Data Siswa</legend>
+                <label>Nama :</label>
+                <input type="hidden" id="nis-edit" />
+                <input type="text" id="nama-edit" placeholder="nama" />
+                <br />
+                <br />
+                <label>Kelas :</label>
+                <input type="text" id="kelas-edit" placeholder="kelas" />
+                <br />
+                <br />
+                <label>Alamat :</label>
+                <input type="text" id="alamat-edit" placeholder="alamat" />
+                <br />
+                <br />
+                <button type="submit">Edit</button>
+            </fieldset>
+            
+        </form>
+    </div>
+
+    <div id="page-list">
+        <button id="btn-add">Tambah Data Siswa</button>
+        <br />
+        <br />
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Nama Siswa</th>
+                <th>Kelas</th>
+                <th>Alamat</th>
+                <th>Aksi</th>
+            </tr>
+            <tbody id="body-table"></tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#page-form").hide();
+            $("#page-form-edit").hide();
+            let index_edit = null;
+            const siswa = [
+                {
+                    nis: 1,
+                    nama: "mahdi",
+                    kelas: "8b",
+                    alamat: "Bogor",
+                },
+                {
+                    nis: 2,
+                    nama: "buchori",
+                    kelas: "8f",
+                    alamat: "bogor",
+                },
+                {
+                    nis: 3,
+                    nama: "Budi",
+                    kelas: "8c",
+                    alamat: "bogor",
+                },
+            ];
+            
+            siswa.forEach(function (items, index) {
+                $("#body-table").append(`
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${items.nama}</td>
+                    <td>${items.kelas}</td>
+                    <td>${items.alamat}</td>
+                    <td>
+                        <button class="btn-edit" data-index="${index}">Edit</button>
+                        <button class="btn-delete" data-index="${index}">Hapus</button>
+                    </td>
+                </tr>
+                `);
+            });
+
+            function refresh_table(){
+                $("#body-table").empty();
+                siswa.forEach(function (items, index) {
+                    $("#body-table").append(`
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${items.nama}</td>
+                        <td>${items.kelas}</td>
+                        <td>${items.alamat}</td>
+                        <td>
+                            <button class="btn-edit" data-index="${index}">Edit</button>
+                            <button class="btn-delete" data-index="${index}">Hapus</button>
+                        </td>
+                    </tr>
+                    `);
+                });
+
+                $(".btn-delete").click(function(){
+                    console.log($(this).attr('data-index'));
+                    const index = $(this).attr('data-index')
+                    siswa.splice(index, 1);
+                    console.log(siswa);
+                    refresh_table();
+                });
+            
+                $(".btn-edit").click(function(){
+                    const index = $(this).attr('data-index');
+                    $('#nama-edit').val(siswa[index].nama);
+                    $('#kelas-edit').val(siswa[index].kelas);
+                    $('#alamat-edit').val(siswa[index].alamat);
+                    $('#nis-edit').val(siswa[index].nis);
+                    index_edit = index;
+                    $("#page-form").hide();
+                    $("#page-form-edit").show();
+                    $("#page-list").hide();
+                });
+            
+            }
+
+            $("#btn-add").click(function () {
+                $("#page-form").show();
+                $("#page-form-edit").hide();
+                $("#page-list").hide();
+            });
+            
+            $("#btn-back").click(function () {
+                $("#page-form").hide();
+                $("#page-form-edit").hide();
+                $("#page-list").show();
+            });
+
+            $("#btn-back-edit").click(function () {
+                $("#page-form").hide();
+                $("#page-form-edit").hide();
+                $("#page-list").show();
+            });
+
+            $(".btn-delete").click(function(){
+                console.log($(this).attr('data-index'));
+                const index = $(this).attr('data-index')
+                siswa.splice(index, 1);
+                console.log(siswa);
+                refresh_table();
+            });
+            
+            $(".btn-edit").click(function(){
+                const index = $(this).attr('data-index');
+                $('#nama-edit').val(siswa[index].nama);
+                $('#kelas-edit').val(siswa[index].kelas);
+                $('#alamat-edit').val(siswa[index].alamat);
+                $('#nis-edit').val(siswa[index].nis);
+                index_edit = index;
+                $("#page-form").hide();
+                $("#page-form-edit").show();
+                $("#page-list").hide();
+            });
+
+            $('#form').submit(function(event){
+                event.preventDefault();
+                const data_siswa ={
+                    nis: Math.random(),
+                    nama : $('#nama').val(),
+                    kelas: $('#kelas').val(),
+                    alamat: $('#alamat').val(),
+                };
+                $('#nama').val("");
+                $('#kelas').val("");
+                $('#alamat').val("");
+                siswa.push(data_siswa);
+                console.log(siswa);
+                $("#page-form").hide();
+                $("#page-form-edit").hide();
+                $("#page-list").show();
+
+                refresh_table();
+                
+            });
+        
+            $('#form-edit').submit(function(event){
+                event.preventDefault();
+                const edit_siswa ={
+                    nis: $('#nis-edit').val(),
+                    nama : $('#nama-edit').val(),
+                    kelas: $('#kelas-edit').val(),
+                    alamat: $('#alamat-edit').val(),
+                };
+                siswa[index_edit] = edit_siswa;
+                console.log(siswa);
+                $("#page-form").hide();
+                $("#page-form-edit").hide();
+                $("#page-list").show();
+
+                refresh_table();
+                
+            });
+        
+            
+        });
+    </script>
+</body>
+</html>
